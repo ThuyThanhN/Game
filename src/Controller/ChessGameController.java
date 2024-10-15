@@ -16,7 +16,6 @@ import java.util.List;
 
 public class ChessGameController {
 	private static final int BOARD_SIZE = 8;
-	private static final int SQ_SIZE = 80;
 	private Piece[][] board;
 	private Piece selectedPiece;
 	private int selectedX, selectedY;
@@ -26,7 +25,7 @@ public class ChessGameController {
 
 	public ChessGameController(ChessGameView view) {
 		this.view = view;
-		this.board = new Piece[8][8];
+		this.board = new Piece[BOARD_SIZE][BOARD_SIZE];
 		setupBoard();
 		currentPlayer = "white"; // Bắt đầu với người chơi trắng
 	}
@@ -63,45 +62,66 @@ public class ChessGameController {
 
 	public void handleMouseClick(int x, int y) {
 		if (selectedPiece == null) {
-			// Chọn quân cờ
-			if (board[y][x] != null && board[y][x].getColor().equals(currentPlayer)) {
-				selectedPiece = board[y][x];
-				selectedX = x;
-				selectedY = y;
-				highlightValidMoves(selectedPiece, selectedX, selectedY);
-				view.highlightValidMoves(validMoves); // Cập nhật view
-			}
+			selectPiece(x, y);
 		} else {
-			// Thực hiện di chuyển
-			Move move = new Move(selectedX, selectedY, x, y);
-			if (move.isValidMove(selectedPiece, board)) {
-				if (board[y][x] != null && !board[y][x].getColor().equals(currentPlayer)) {
-					// Nếu có quân cờ đối thủ ở vị trí đích, ăn quân cờ
-					board[y][x] = selectedPiece; // Di chuyển quân cờ
-				} else if (board[y][x] == null) {
-					// Nếu không có quân cờ ở vị trí đích, chỉ di chuyển
-					board[y][x] = selectedPiece; // Di chuyển quân cờ
-				}
-				board[selectedY][selectedX] = null; // Xóa quân cũ
-				selectedPiece = null; // Reset quân đã chọn
-				validMoves.clear(); // Xóa highlight
-				view.repaint();
-
-				// Chuyển lượt cho người chơi tiếp theo
-				currentPlayer = currentPlayer.equals("white") ? "black" : "white";
-			} else {
-				selectedPiece = null; // Reset nếu không hợp lệ
-				validMoves.clear(); // Xóa highlight
-				view.repaint();
-			}
+			executeMove(x, y);
 		}
+	}
+
+	private void selectPiece(int x, int y) {
+		if (isValidSelection(x, y)) {
+			selectedPiece = board[y][x];
+			selectedX = x;
+			selectedY = y;
+			highlightValidMoves(selectedPiece, selectedX, selectedY);
+			view.highlightValidMoves(validMoves);
+		}
+	}
+
+	private boolean isValidSelection(int x, int y) {
+		return board[y][x] != null && board[y][x].getColor().equals(currentPlayer);
+	}
+
+	private void executeMove(int x, int y) {
+		Move move = new Move(selectedX, selectedY, x, y);
+		// Kiểm tra xem nước đi có hợp lệ và không ăn quân của chính mình
+		if (move.isValidMove(selectedPiece, board)
+				&& (board[y][x] == null || !board[y][x].getColor().equals(currentPlayer))) {
+			makeMove(move, x, y);
+			switchPlayer();
+		} else {
+			resetSelection();
+		}
+	}
+
+	private void makeMove(Move move, int x, int y) {
+		if (board[y][x] != null) {
+			// Xóa quân cờ đối thủ
+			board[y][x] = selectedPiece;
+		}
+		board[move.getEndY()][move.getEndX()] = selectedPiece;
+		board[selectedY][selectedX] = null; // Xóa quân cũ
+		resetSelection();
+		view.repaint();
+	}
+
+	private void switchPlayer() {
+		currentPlayer = currentPlayer.equals("white") ? "black" : "white";
+	}
+
+	private void resetSelection() {
+		selectedPiece = null; // Reset quân đã chọn
+		validMoves.clear(); // Xóa highlight
+		view.repaint();
 	}
 
 	private void highlightValidMoves(Piece piece, int x, int y) {
 		validMoves.clear();
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				if (piece.isValidMove(x, y, j, i, board)) {
+				Piece targetPiece = board[i][j];
+				if (piece.isValidMove(x, y, j, i, board)
+						&& (targetPiece == null || !targetPiece.getColor().equals(piece.getColor()))) {
 					validMoves.add(new Point(j, i));
 				}
 			}
