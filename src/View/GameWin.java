@@ -38,45 +38,44 @@ public class GameWin extends JFrame {
         winLabel.setFont(new Font("Arial", Font.BOLD, 36));
         winLabel.setForeground(Color.DARK_GRAY);
 
-        // Them JLabel vao layout
         gbc.gridx = 0;
-        gbc.gridy = 0; 
-        gbc.gridwidth = 3; 
+        gbc.gridy = 0;
+        gbc.gridwidth = 3;
         panel.add(winLabel, gbc);
 
         homeBtn = createButton("img/home.png");
         exitBtn = createButton("img/exit.png");
 
-        gbc.gridwidth = 1; 
+        gbc.gridwidth = 1;
 
-        // Nut Home
+        // Btn Home
         gbc.gridx = 0;
-        gbc.gridy = 1; 
+        gbc.gridy = 1;
         panel.add(homeBtn, gbc);
 
-        // Nut Exit
+        // Btn Exit
         gbc.gridx = 1;
         panel.add(exitBtn, gbc);
 
-        // Them ActionListener cho nut Exit
+        // Btn Exit => Thoat Game
         exitBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.exit(0); // Thoat ung dung
+                System.exit(0);
             }
         });
 
-        // Them ActionListener cho nut Home
+        // Btn Home => Quay ve man hinh chinh
         homeBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 GameViewScreen gameViewScreen = new GameViewScreen();
-                gameViewScreen.setVisible(true); // Hien GameViewScreen
-                dispose(); // Dong GameWin
+                gameViewScreen.setVisible(true);
+                dispose();
             }
         });
 
-        setContentPane(panel); // Thiet lap panel lam noi dung cua JFrame
+        this.setContentPane(panel);
     }
 
     private JButton createButton(String imagePath) {
