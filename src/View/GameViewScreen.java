@@ -59,15 +59,15 @@ public class GameViewScreen extends JFrame {
 		this.add(exitBtn, gbc);
 
 		// Nhiem vu cua Button
-		// Btn Play => Chuyen sang ChooseCharacte de chon che do va dien ten
-//		playBtn.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				ChooseCharacter character = new ChooseCharacter();
-//				character.setVisible(true);
-//				dispose(); // Đóng
-//			}
-//		});
+		// Btn Play => Chuyen sang ModelView de chon che do va dien ten
+		playBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ModeView modeView = new ModeView();
+				modeView.setVisible(true);
+				dispose(); // Đóng
+			}
+		});
 
 		// Btn Help => Chuyen sang GameGuide nguoi choi doc huong dan choi Play Chess
 		helpBtn.addActionListener(new ActionListener() {

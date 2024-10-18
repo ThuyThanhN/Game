@@ -25,6 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+// Man hinh chon che do choi, chon quan co va nhap ten
 public class ModeView extends JFrame {
 	public ModeView() {
 		// background
@@ -51,14 +52,13 @@ public class ModeView extends JFrame {
 		// 2 button mode and next
 		JPanel button = new JPanel();
 		button.setOpaque(false);// lam trong suot
-		button.setLayout(new FlowLayout(FlowLayout.CENTER, 20, -80)); // khoang cach
+		button.setLayout(new FlowLayout(FlowLayout.CENTER)); // khoang cach
 
 		// create button mode
 		ImageIcon mode = new ImageIcon("img/mode.png");
 		JButton btMode = new JButton(mode);
 		btMode.setOpaque(false);// lam trong suot button
 		btMode.setBorderPainted(false);
-		btMode.setPreferredSize(new Dimension(300, 300));
 		btMode.setFocusPainted(false);
 		btMode.setContentAreaFilled(false);
 		btMode.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -164,7 +164,6 @@ public class ModeView extends JFrame {
 		JButton btNext = new JButton(next);
 		btNext.setOpaque(false);// lam trong suot button
 		btNext.setBorderPainted(false);
-		btNext.setPreferredSize(new Dimension(300, 300));
 		btNext.setFocusPainted(false);
 		btNext.setContentAreaFilled(false);
 		btNext.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
