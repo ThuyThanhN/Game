@@ -2,7 +2,9 @@ package View;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
@@ -49,23 +51,24 @@ public class ModeView extends JFrame {
 		// 2 button mode and next
 		JPanel button = new JPanel();
 		button.setOpaque(false);// lam trong suot
-		button.setLayout(new GridLayout(1, 2, 5, 5));
+		button.setLayout(new FlowLayout(FlowLayout.CENTER, 20, -80)); // khoang cach
 
 		// create button mode
 		ImageIcon mode = new ImageIcon("img/mode.png");
 		JButton btMode = new JButton(mode);
 		btMode.setOpaque(false);// lam trong suot button
 		btMode.setBorderPainted(false);
-		btMode.setPreferredSize(new Dimension(150, 150));
+		btMode.setPreferredSize(new Dimension(300, 300));
 		btMode.setFocusPainted(false);
 		btMode.setContentAreaFilled(false);
+		btMode.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		// event for mode
 		btMode.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				JDialog di = new JDialog(ModeView.this, "ChooseMode");
+				JDialog di = new JDialog(ModeView.this, "Choose Mode");
 				JPanel panel = new JPanel(new GridLayout(4, 1));
 				panel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 				JLabel label = new JLabel("Mode");
@@ -161,9 +164,10 @@ public class ModeView extends JFrame {
 		JButton btNext = new JButton(next);
 		btNext.setOpaque(false);// lam trong suot button
 		btNext.setBorderPainted(false);
-		btNext.setPreferredSize(new Dimension(150, 50));
+		btNext.setPreferredSize(new Dimension(300, 300));
 		btNext.setFocusPainted(false);
 		btNext.setContentAreaFilled(false);
+		btNext.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		// event for next
 		btNext.addActionListener(new ActionListener() {
 			@Override
